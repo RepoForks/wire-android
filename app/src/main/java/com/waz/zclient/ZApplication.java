@@ -144,6 +144,7 @@ public class ZApplication extends WireApplication implements NotificationsHandle
 
     @Override
     public TrackingEventsHandler getTrackingEventsHandler() {
+
         if (trackingEventsHandler == null) {
             trackingEventsHandler = new AppTrackingEventsHandler(getControllerFactory().getTrackingController());
         }

@@ -79,11 +79,23 @@ public class AccountPreferences extends BasePreferenceFragment<AccountPreference
         namePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                final String newName = (String) newValue;
+                final String newName = ((String) newValue).trim();
                 if (TextUtils.isEmpty(newName)) {
+                    ViewUtils.showAlertDialog(getActivity(),
+                        null,
+                        getString(R.string.pref_account_edit_name_empty_warning),
+                        getString(R.string.pref_account_edit_name_empty_verify),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        },
+                        false);
+
                     return false;
                 }
-                getStoreFactory().getProfileStore().setMyName(newName.trim());
+                getStoreFactory().getProfileStore().setMyName(newName);
                 return false;
             }
         });
