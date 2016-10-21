@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.text.TextUtils;
+import android.widget.EditText;
 import com.waz.api.InitListener;
 import com.waz.api.Self;
 import com.waz.zclient.R;
@@ -76,6 +77,13 @@ public class AccountPreferences extends BasePreferenceFragment<AccountPreference
         super.onCreatePreferences2(savedInstanceState, rootKey);
         addPreferencesFromResource(R.xml.preferences_account);
         namePreference = (EditTextPreference) findPreference(getString(R.string.pref_account_name_key));
+        namePreference.setOnEditTextCreatedListener(new EditTextPreference.OnEditTextCreatedListener() {
+            @Override
+            public void onEditTextCreated(EditText edit) {
+                //Having it directly on the xml doesn't seem to work for EditTextPreference
+                edit.setSingleLine(true);
+            }
+        });
         namePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
