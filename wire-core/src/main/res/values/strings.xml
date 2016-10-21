@@ -459,7 +459,7 @@
     <string name="pref_account_sign_out_warning_cancel">Cancel</string>
     <string name="pref_account_password_title">Reset Password</string>
     <string name="pref_account_edit_name_empty_warning">Name cannot be empty</string>
-    <string name="pref_account_edit_name_empty_verify">Ok</string>
+    <string name="pref_account_edit_name_empty_verify">OK</string>
 
     <!-- Options -->
     <string name="pref_options_dark_theme_title">Dark theme</string>
