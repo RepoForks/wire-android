@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import com.waz.api.InitListener;
 import com.waz.api.Self;
@@ -79,16 +80,24 @@ public class AccountPreferences extends BasePreferenceFragment<AccountPreference
         namePreference = (EditTextPreference) findPreference(getString(R.string.pref_account_name_key));
         namePreference.setOnEditTextCreatedListener(new EditTextPreference.OnEditTextCreatedListener() {
             @Override
-            public void onEditTextCreated(EditText edit) {
+            public void onEditTextCreated(final EditText edit) {
                 //Having it directly on the xml doesn't seem to work for EditTextPreference
                 edit.setSingleLine(true);
+
+                edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        edit.setSelection(edit.getText().length());
+                    }
+                });
             }
         });
+
         namePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 final String newName = ((String) newValue).trim();
-                if (TextUtils.isEmpty(newName)) {
+                if (TextUtils.getTrimmedLength(newName) < getResources().getInteger(R.integer.account_preferences__min_name_length)) {
                     ViewUtils.showAlertDialog(getActivity(),
                         null,
                         getString(R.string.pref_account_edit_name_empty_warning),
